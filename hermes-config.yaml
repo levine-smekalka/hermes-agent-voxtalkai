@@ -9,6 +9,9 @@
 # has. Hermes manages it: do not copy it into another config.
 _config_version: 54
 
+checkpoints:
+  enabled: true
+
 # =============================================================================
 # Database Configuration
 # =============================================================================
