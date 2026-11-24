@@ -1,0 +1,35 @@
+Docker Sandbox + Hermes + frontier model
+
+Use /goal to manage the infra for features
+
+Safety: /rollback command native to Hermes + sandbox
+
+todo
+Set-up git for Hermes
+
+Here we are not running Docker Sandbox network policy since we are running short on time, ideally the process should be this:
+- select the policy who already allow all the usual tools then add what's missing and default to deny.
+# command to test config upd
+sbx policy check $dns
+
+# LOG
+$ sbx run "docker.io/sbx/hermes-agent-kit:latest" hermes-agent-voxtalkai
+The selected workspace does not exist. Would you like to create it? (y/N): y
+Created workspace directory: /home/user/Documents/voxtalkai/hermes-agent-voxtalkai
+── RESOLVE SETUP
+   resolving configuration…
+     sandbox    hermes-agent-hermes-agent-voxtalkai
+     agent      hermes-agent
+     kit        docker.io/sbx/hermes-agent-kit:latest
+     workspace  /home/user/Documents/voxtalkai/hermes-agent-voxtalkai (rw)
+     image      docker.io/sbx/hermes-agent-image:latest
+     cpu        16
+     memory     7.7 GiB
+   ✓ configuration resolved
+── PREPARE IMAGE
+   → pull docker.io/sbx/hermes-agent-image:latest
+   
+   etc.
+   
+   
+$ sbx cp /home/user/Documents/voxtalkai/corvane-platform-test.zip hermes-agent-hermes-agent-voxtalkai:/home/user/
