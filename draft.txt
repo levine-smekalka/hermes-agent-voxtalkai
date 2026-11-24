@@ -5,25 +5,13 @@ Docker Sandbox + Hermes + whichever frontier model (+ a judge model, no sub-agen
 Use /goal to manage the infra for features with a Ralph loop.
 https://github.com/nousresearch/hermes-agent/blob/main/website/docs/user-guide/features/goals.md
 
-Safety: /rollback command native to Hermes + sandbox
+Safety: /rollback command native to Hermes + Docker sandbox
 https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/checkpoints-and-rollback.md
 Disabled by default in ~/.hermes/config.yaml
 https://github.com/NousResearch/hermes-agent/blob/main/cli-config.yaml.example
 
 I would also run Checkov in the CI/CD to pair with the harness.
 Hard configuration and hard fail early-on always catch hallucination's mess.
-
-# Set-up git for Hermes
-#todo here
-
-# if you don't want to go full agentic, you can use this skill for a slower workflow
-requesting-code-review (native) - https://github.com/NousResearch/hermes-agent/blob/main/skills/software-development/requesting-code-review/SKILL.md
-
-# Caveat
-What's not cover:
-- brain (llm-wiki likes)
-- memory setup
-- personality setup (or system prompt like)
 
 Here we are not fully running Docker Sandbox network policy since we are running short on time, ideally the process should be this:
 - select the policy who already allow all the usual tools then add what's missing and default to deny.
@@ -34,6 +22,24 @@ $ sbx policy check $dns
 Example of exception: GCS bucket, client site network etc.
 
 Usually Docker sandbox get distributed as a kit (flat file for versioning) but i haven't play with it yet, hence this file.
+
+# Set-up git for Hermes inside the sandbox
+$ hermes skills install github
+... or inside the TUI
+/skills install NousResearch/hermes-agent/main/skills/software-development/github/SKILL.md
+
+Install GitHub CLI ('gh') and authenticated with 'gh auth login'
+
+You're now set-up, start with "/goal refactor environment with terragrunt" for instance.
+
+# if you don't want to go full agentic, you can use this skill for a slower workflow
+requesting-code-review (native) - https://github.com/NousResearch/hermes-agent/blob/main/skills/software-development/requesting-code-review/SKILL.md
+
+# Caveat
+What's not cover:
+- brain (llm-wiki likes)
+- memory setup
+- personality setup (or system prompt like)
 
 # LOG
 $ sbx run "docker.io/sbx/hermes-agent-kit:latest" hermes-agent-voxtalkai
