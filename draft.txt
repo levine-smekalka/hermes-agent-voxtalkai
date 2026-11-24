@@ -1,16 +1,39 @@
-Docker Sandbox + Hermes + frontier model
+# Stack & config
+Docker Sandbox + Hermes + whichever frontier model (+ a judge model, no sub-agent config)
 
-Use /goal to manage the infra for features
+# How ?
+Use /goal to manage the infra for features with a Ralph loop.
+https://github.com/nousresearch/hermes-agent/blob/main/website/docs/user-guide/features/goals.md
 
 Safety: /rollback command native to Hermes + sandbox
+https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/checkpoints-and-rollback.md
+Disabled by default in ~/.hermes/config.yaml
+https://github.com/NousResearch/hermes-agent/blob/main/cli-config.yaml.example
 
-todo
-Set-up git for Hermes
+I would also run Checkov in the CI/CD to pair with the harness.
+Hard configuration and hard fail early-on always catch hallucination's mess.
 
-Here we are not running Docker Sandbox network policy since we are running short on time, ideally the process should be this:
+# Set-up git for Hermes
+#todo here
+
+# if you don't want to go full agentic, you can use this skill for a slower workflow
+requesting-code-review (native) - https://github.com/NousResearch/hermes-agent/blob/main/skills/software-development/requesting-code-review/SKILL.md
+
+# Caveat
+What's not cover:
+- brain (llm-wiki likes)
+- memory setup
+- personality setup (or system prompt like)
+
+Here we are not fully running Docker Sandbox network policy since we are running short on time, ideally the process should be this:
 - select the policy who already allow all the usual tools then add what's missing and default to deny.
-# command to test config upd
-sbx policy check $dns
+# command to test config update
+$ sbx policy allow network --sandbox hermes-agent-voxtalkai "$dns"
+$ sbx policy check $dns
+
+Example of exception: GCS bucket, client site network etc.
+
+Usually Docker sandbox get distributed as a kit (flat file for versioning) but i haven't play with it yet, hence this file.
 
 # LOG
 $ sbx run "docker.io/sbx/hermes-agent-kit:latest" hermes-agent-voxtalkai
@@ -31,5 +54,5 @@ Created workspace directory: /home/user/Documents/voxtalkai/hermes-agent-voxtalk
    
    etc.
    
-   
+# if you need local file access in the sandbox prior to the git repo creation   
 $ sbx cp /home/user/Documents/voxtalkai/corvane-platform-test.zip hermes-agent-hermes-agent-voxtalkai:/home/user/
